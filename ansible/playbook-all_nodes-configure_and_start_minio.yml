@@ -48,7 +48,7 @@
 
     - name: 'Wait for the MinIO URL to be reachable'
       ansible.builtin.uri:
-        url: "http://{{ hostvars['minio']['ansible_default_ipv4']['address'] }}:33101"
+        url: "http://{{ hostvars['minio']['ansible_default_ipv4']['address'] }}:9001"
       register: result
       until: "result.status == 302 or result.status == 200"
       retries: 11
@@ -56,7 +56,7 @@
 
     - name: 'Output minio URL'
       ansible.builtin.debug:
-        msg: "MinIO is waiting for you on this URL: http://{{ hostvars['minio']['ansible_default_ipv4']['address'] }}:33101"
+        msg: "MinIO is waiting for you on this URL: http://{{ hostvars['minio']['ansible_default_ipv4']['address'] }}:9001"
 
     - name: 'Output minio credentials'
       ansible.builtin.debug:
