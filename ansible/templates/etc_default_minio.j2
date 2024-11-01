@@ -1,0 +1,10 @@
+# Remote volumes to be used for MinIO server.
+# Uncomment line before starting the server.
+MINIO_VOLUMES=/opt/minio/
+
+# Root credentials for the server.
+# Uncomment both lines before starting the server.
+MINIO_ROOT_USER=minio-admin
+MINIO_ROOT_PASSWORD=totallynotsecure
+
+MINIO_OPTS="--certs-dir /etc/minio/certs"
