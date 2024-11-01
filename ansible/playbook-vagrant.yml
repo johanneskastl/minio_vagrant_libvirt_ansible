@@ -29,3 +29,6 @@
 
 - name: 'Run playbook-all_nodes-add_home_ojkastl_buildservice_minio_repository.yml'
   ansible.builtin.import_playbook: playbook-all_nodes-add_home_ojkastl_buildservice_minio_repository.yml
+
+- name: 'Run playbook-all_nodes-install_minio.yml'
+  ansible.builtin.import_playbook: playbook-all_nodes-install_minio.yml
