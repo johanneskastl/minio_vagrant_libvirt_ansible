@@ -1,6 +1,6 @@
 # minio_vagrant_libvirt_ansible
 
-This Vagrant setup creates a VM and installs a [MinIO](https://minio.org/)
+This Vagrant setup creates a VM and installs a [MinIO](https://min.io/)
 instance on it.
 
 Default OS is openSUSE Tumbleweed. Although that can be changed in the
