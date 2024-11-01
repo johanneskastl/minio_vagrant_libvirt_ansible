@@ -1,0 +1,63 @@
+---
+- name: 'Configure and start minio'
+  hosts: 'all'
+  gather_facts: true
+  become: true
+
+  handlers:
+
+    - name: 'Restart the minio service'
+      ansible.builtin.service:
+        name: 'minio'
+        state: 'restarted'
+      when:
+        - 'not minio_service_started.changed | bool'
+
+  tasks:
+
+    - name: 'Create directory /opt/minio/'
+      ansible.builtin.file:
+        path: '/opt/minio/'
+        state: 'directory'
+        owner: 'minio-user'
+        group: 'minio-user'
+        mode: '750'
+
+    - name: 'Create /etc/default/minio'
+      ansible.builtin.template:
+        src: 'etc_default_minio.j2'
+        dest: '/etc/default/minio'
+        owner: 'root'
+        group: 'root'
+        mode: '660'
+      notify:
+        - 'Restart the minio service'
+
+    - name: 'Start the minio service'
+      ansible.builtin.service:
+        name: 'minio'
+        state: 'started'
+      register: minio_service_started
+
+    - name: 'Enable the minio service'
+      ansible.builtin.service:
+        name: 'minio'
+        enabled: true
+
+  post_tasks:
+
+    - name: 'Wait for the MinIO URL to be reachable'
+      ansible.builtin.uri:
+        url: "http://{{ hostvars['minio']['ansible_default_ipv4']['address'] }}:33101"
+      register: result
+      until: "result.status == 302 or result.status == 200"
+      retries: 11
+      delay: 10
+
+    - name: 'Output minio URL'
+      ansible.builtin.debug:
+        msg: "MinIO is waiting for you on this URL: http://{{ hostvars['minio']['ansible_default_ipv4']['address'] }}:33101"
+
+    - name: 'Output minio credentials'
+      ansible.builtin.debug:
+        msg: "Use the username 'minio-admin' with the password 'totallynotsecure'"
