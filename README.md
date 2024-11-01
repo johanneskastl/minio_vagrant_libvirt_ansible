@@ -6,7 +6,7 @@ instance on it.
 Default OS is openSUSE Tumbleweed. Although that can be changed in the
 Vagrantfile, please beware that this will break the Ansible provisioning.
 
-There is a branch called `Leap156` that uses openSUSE Leap 15.6.
+There is a branch called `Leap_15.6` that uses openSUSE Leap 15.6.
 
 ## Vagrant
 
